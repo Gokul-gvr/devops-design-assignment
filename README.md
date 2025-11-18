@@ -35,6 +35,17 @@ Canary deployments to percentage of instances
 
 Blue-green deployment across separate instance groups
 
+Step 1: User Request
+     │
+     ▼
+Step 2: Nearest CloudFront Edge
+     │
+     ▼
+Step 3: CloudFront Distribution
+     │
+     ▼
+Step 4: S3 Origin Bucket
+
 3. Secure & Fault-Tolerant Setup
 Security Measures:
 Secrets Management: Environment-specific secrets (API keys, database credentials) stored in platform secrets manager, not in code
@@ -66,19 +77,6 @@ Idempotent Deployments: Same deployment can be run multiple times safely
 Progressive Exposure: Changes roll out gradually: dev → stage → prod
 
 Smoke Testing: Critical path verification in production before full traffic
-
-┌─────────────────────────────────────────────────────────────┐
-│                    CloudFront (Global CDN)                  │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌───────────────┐│
-│  │  Edge Location  │  │  Edge Location  │  │ Edge Location ││
-│  │     US-East     │  │     EU-West     │  │   AP-South    ││
-│  └─────────────────┘  └─────────────────┘  └───────────────┘│
-└─────────────────────────────────────────────────────────────┘
-                                │
-                        ┌───────────────┐
-                        │  S3 Origin    │
-                        │  us-east-1    │
-                        └───────────────┘
 
 
 ## 🛠️ Task 2: API Architecture Design Analysis
