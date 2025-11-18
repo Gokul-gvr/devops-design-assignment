@@ -8,6 +8,9 @@ Traffic Routing: Production deployment can be designed to work with load balance
 
 Rollback Ready: If health checks fail, the load balancer can be redirected back to previous healthy instances
 
+
+User Request → Route 53 DNS → Nearest CloudFront Edge → S3 Origin (us-east-1)
+
 CDN Strategy:
 
 Static Asset Handling: The build stage can separate static assets (JS, CSS, images) that are pushed to CDN
@@ -35,16 +38,17 @@ Canary deployments to percentage of instances
 
 Blue-green deployment across separate instance groups
 
-Step 1: User Request
-     │
-     ▼
-Step 2: Nearest CloudFront Edge
-     │
-     ▼
-Step 3: CloudFront Distribution
-     │
-     ▼
-Step 4: S3 Origin Bucket
+graph TB
+    A[Global Users] --> B[CloudFront]
+    B --> C[S3 Origin]
+    
+    D[CloudWatch Metrics] --> E[Auto Scaling]
+    E --> F[CloudFront Cache]
+    
+    subgraph "Static Content Scaling"
+        C --> G[Auto-expanding S3]
+        H[Lambda@Edge] --> I[Dynamic Content]
+    end
 
 3. Secure & Fault-Tolerant Setup
 Security Measures:
