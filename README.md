@@ -1,20 +1,21 @@
-# DevOps System Design Assignment
+## 1. UI Architecture Design
 
-## Architecture Overview
-This repository contains the design for a scalable cloud architecture using AWS services, including UI hosting, API backend, database, and CI/CD pipeline.
+### Hosting Solution
+  S3 Bucket: Static website hosting for React/Angular/Vue build files
+  CloudFront CDN: Global content delivery with edge caching
+  Route 53: DNS management and domain routing
 
-## Components Designed
-1. **UI Architecture** - S3 + CloudFront for scalable frontend hosting
-2. **API Architecture** - ECS Fargate for backend services  
-3. **Database Architecture** - RDS PostgreSQL with high availability
-4. **CI/CD Pipeline** - GitHub Actions workflow
+### Scaling Approach
+  Horizontal Scaling: Automatic through S3 + CloudFront (handles unlimited requests)
+  CDN Caching: Static assets cached at 300+ edge locations
+  Performance: Reduced latency through global distribution
 
-## Diagrams
-- [System Architecture](./diagrams/architecture-diagram.pdf)
-- [CI/CD Pipeline](./diagrams/cicd-pipeline.pdf)
+### High Availability
+  Multi-Region: CloudFront serves from nearest edge location
+  Automatic Failover: Route 53 health checks + failover routing
+  Redundancy: S3 versioning + cross-region replication
 
-## Design Decisions
-- **Scalability**: Horizontal scaling with load balancers and auto-scaling groups
-- **Security**: VPC isolation, security groups, and secrets management
-- **Availability**: Multi-AZ deployment and automated failover
-- **Maintenance**: Fully managed services where possible
+### Security
+  HTTPS Enforcement: CloudFront forces SSL/TLS
+  S3 Access: Origin Access Identity (OAI) restricts direct S3 access
+  WAF: Web Application Firewall for DDoS protection
