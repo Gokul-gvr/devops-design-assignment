@@ -1,23 +1,22 @@
-# devops-design-assignment
-DevOps System Design Assignment - UI, API, Database &amp; CI/CD
+# DevOps Design Assignment
 
-# DevOps System Design Assignment
+## 1. Overview
+This project contains the architecture design, CI/CD pipeline, and documentation for deploying a UI, API, and Database in AWS.
 
-## Architecture Overview
-This repository contains the design for a scalable cloud architecture using AWS services, including UI hosting, API backend, database, and CI/CD pipeline.
+## 2. Deliverables
+- AWS Architecture Diagram (in diagrams/architecture-diagram.pdf)
+- CI/CD Pipeline Diagram (in diagrams/cicd-pipeline.pdf)
+- Architecture Explanation
+- Security & Scaling Strategy
 
-## Components Designed
-1. UI Architecture - S3 + CloudFront for scalable frontend hosting
-2. API Architecture - ECS Fargate for backend services  
-3. Database Architecture - RDS PostgreSQL with high availability
-4. CI/CD Pipeline - GitHub Actions workflow
+## 3. Architecture Components
+- VPC with Public & Private Subnets
+- Application Load Balancer → EC2 Auto Scaling (API)
+- S3 + CloudFront (UI Hosting)
+- RDS MySQL (private subnet)
+- IAM, Security Groups, NACL for security
+- CloudWatch, S3 Logging
 
-## Diagrams
-[System Architecture](./diagrams/architecture-diagram.pdf)
- [CI/CD Pipeline](./diagrams/cicd-pipeline.pdf)
+## 4. CI/CD Flow
+- GitHub → AWS CodePipeline → CodeBuild → S3/EC2 Deployment
 
-## Design Decisions
-  Scalability: Horizontal scaling with load balancers and auto-scaling groups
-  Security: VPC isolation, security groups, and secrets management
-  Availability: Multi-AZ deployment and automated failover
-  Maintenance: Fully managed services where possible
